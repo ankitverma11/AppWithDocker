@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>1e8e3a1e-56bc-4a43-ab9a-351262cf3b34</UserSecretsId>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppWithDocker.Logging\AppWithDocker.Logging.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Serilog.Extensions.Logging.File" />
+    <None Remove="NLog.Web.AspNetCore" />
+    <None Remove="NLog.Config" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <None Remove="Views\Test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="NLog.Config" Version="4.7.14" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Test\" />
+  </ItemGroup>
+</Project>
