@@ -23,6 +23,8 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="DbContext\" />
+    <None Remove="Views\Account\" />
+    <None Remove="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.0.0" />
@@ -39,5 +41,7 @@
   <ItemGroup>
     <Folder Include="Views\Test\" />
     <Folder Include="DbContext\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
 </Project>

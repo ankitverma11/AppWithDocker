@@ -4,6 +4,7 @@ using AppWithDocker.Logging;
 using AppWithDocker.Logging.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,7 @@ namespace AppWithDocker
             services.AddControllersWithViews();
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddDbContext<AppDBContext>(x => x.UseSqlServer(Configuration.GetConnectionString("connectionstring")));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
