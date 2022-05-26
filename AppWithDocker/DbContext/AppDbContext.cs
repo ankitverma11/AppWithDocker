@@ -1,10 +1,11 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppWithDocker.DbContext
 { 
-        public class AppDBContext : IdentityDbContext
+        public class AppDBContext : IdentityDbContext<IdentityUser>
         {
             private readonly DbContextOptions _options;
 
@@ -16,7 +17,7 @@ namespace AppWithDocker.DbContext
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 base.OnModelCreating(modelBuilder);
-
-            }
+           
+        }
         }
 }

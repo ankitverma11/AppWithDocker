@@ -29,7 +29,7 @@ namespace AppWithDocker
             services.AddControllersWithViews();
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddDbContext<AppDBContext>(x => x.UseSqlServer(Configuration.GetConnectionString("connectionstring")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDBContext>();
+            services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AppDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +53,12 @@ namespace AppWithDocker
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
