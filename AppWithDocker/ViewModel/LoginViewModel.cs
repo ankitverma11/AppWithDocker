@@ -10,6 +10,7 @@ namespace AppWithDocker.ViewModel
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [StringLength(10, MinimumLength = 6)]
         public string Password { get; set; }
 
         [Display(Name = "Remember Me")]
