@@ -1,5 +1,6 @@
-﻿using System.IO;
-using AppWithDocker.DbContext;
+﻿using System;
+using System.IO;
+using AppWithDocker.Data_DbContext;
 using AppWithDocker.Logging;
 using AppWithDocker.Logging.Interface;
 using Microsoft.AspNetCore.Builder;
@@ -26,10 +27,16 @@ namespace AppWithDocker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            //Set Session Timeout. Default is 20 minutes.
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
             services.AddControllersWithViews();
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddDbContext<AppDBContext>(x => x.UseSqlServer(Configuration.GetConnectionString("connectionstring")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDBContext>();
+            services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AppDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +53,7 @@ namespace AppWithDocker
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -53,11 +61,12 @@ namespace AppWithDocker
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
