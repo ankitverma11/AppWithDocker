@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AppWithDocker.Data_DbContext;
+using AppWithDocker.Logging.Interface;
 using AppWithDocker.Models;
 using AppWithDocker.ViewModel;
 using Microsoft.AspNetCore.Authorization;
@@ -14,17 +15,20 @@ namespace AppWithDocker.Controllers
 {
     public class AccountController : Controller
     {
-        
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+
+        //private readonly UserManager<IdentityUser> _userManager;
+        //private readonly SignInManager<IdentityUser> _signInManager;
         private readonly AppDBContext _appDBContext;
+        private readonly ILoggerManager _logger;
 
+    
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, AppDBContext dBContext)
+        public AccountController(AppDBContext dBContext, ILoggerManager logger)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            // _userManager = userManager;
+            // _signInManager = signInManager;
             _appDBContext = dBContext;
+            _logger = logger;
         }
 
         public IActionResult Register()
@@ -45,7 +49,7 @@ namespace AppWithDocker.Controllers
                     Mobile = model.Mobile
                 };
 
-                var result =_appDBContext.Add(user);
+                var result = _appDBContext.Add(user);
                 await _appDBContext.SaveChangesAsync();
 
                 if (result != null)
@@ -70,7 +74,7 @@ namespace AppWithDocker.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _appDBContext.Userdetails.SingleOrDefaultAsync(
-                    x => x.Email == user.Email && x.Password == user.Password); 
+                    x => x.Email == user.Email && x.Password == user.Password);
 
                 if (result != null)
                 {
